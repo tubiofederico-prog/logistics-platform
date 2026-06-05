@@ -42,7 +42,8 @@ body {
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-cyan-400 to-electric-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #00d9ff, #0ea5e9);
   }
 
   .premium-shadow {
