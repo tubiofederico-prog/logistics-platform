@@ -11,8 +11,6 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import {
-  LineChart,
-  Line,
   BarChart,
   Bar,
   XAxis,
@@ -35,18 +33,9 @@ import { mockKPIs, mockChartData, mockOperations, mockAlerts, mockProductivityDa
 
 export default function DashboardPage() {
   const operationColumns = [
-    {
-      header: 'Operación',
-      accessor: 'id' as const,
-    },
-    {
-      header: 'Tipo',
-      accessor: 'type' as const,
-    },
-    {
-      header: 'Cliente',
-      accessor: 'client' as const,
-    },
+    { header: 'Operación', accessor: 'id' as const },
+    { header: 'Tipo', accessor: 'type' as const },
+    { header: 'Cliente', accessor: 'client' as const },
     {
       header: 'Cantidad',
       accessor: 'quantity' as const,
@@ -65,34 +54,7 @@ export default function DashboardPage() {
         return <Badge variant={variants[value] || 'secondary'}>{value}</Badge>
       },
     },
-    {
-      header: 'Responsable',
-      accessor: 'assignedTo' as const,
-    },
-  ]
-
-  const alertColumns = [
-    {
-      header: 'Tipo',
-      accessor: 'type' as const,
-      render: (value: string) => {
-        const variants = {
-          'Crítico': 'danger',
-          'Advertencia': 'warning',
-          'Información': 'info',
-        } as Record<string, any>
-        return <Badge variant={variants[value] || 'secondary'}>{value}</Badge>
-      },
-    },
-    {
-      header: 'Título',
-      accessor: 'title' as const,
-    },
-    {
-      header: 'Hora',
-      accessor: 'timestamp' as const,
-      render: (value: string) => value.split(' ')[1],
-    },
+    { header: 'Responsable', accessor: 'assignedTo' as const },
   ]
 
   const COLORS = ['#00d9ff', '#0ea5e9', '#06b6d4']
@@ -101,12 +63,13 @@ export default function DashboardPage() {
     <>
       <Breadcrumbs />
 
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">Torre de Control</h1>
-        <p className="text-gray-400">Resumen operativo en tiempo real • Última actualización: Hace 2 minutos</p>
+      <div className="mb-12">
+        <h1 className="text-4xl font-bold text-white mb-3">Torre de Control</h1>
+        <p className="text-gray-400 text-lg">Resumen operativo en tiempo real • Última actualización: Hace 2 minutos</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         <Link href="/inventory">
           <StatCard
             title="Toneladas Recibidas"
@@ -145,38 +108,39 @@ export default function DashboardPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
         <Card className="lg:col-span-2">
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-              <TrendingUp size={20} className="text-cyan-400" />
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-white flex items-center gap-3">
+              <TrendingUp size={24} className="text-[#00d9ff]" />
               Operaciones por Hora
             </h2>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={320}>
             <BarChart data={mockChartData}>
               <CartesianGrid strokeDasharray="3 3" stroke="#2d435e" />
-              <XAxis dataKey="hour" stroke="#6b7280" />
-              <YAxis stroke="#6b7280" />
+              <XAxis dataKey="hour" stroke="#9ca3af" />
+              <YAxis stroke="#9ca3af" />
               <Tooltip
-                contentStyle={{ backgroundColor: '#1a2332', border: '1px solid #2d435e' }}
+                contentStyle={{ backgroundColor: '#1a2332', border: '1px solid #2d435e', borderRadius: '8px' }}
                 labelStyle={{ color: '#fff' }}
               />
               <Legend />
-              <Bar dataKey="received" fill="#00d9ff" name="Recibidas" />
-              <Bar dataKey="dispatched" fill="#0ea5e9" name="Despachadas" />
+              <Bar dataKey="received" fill="#00d9ff" name="Recibidas" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="dispatched" fill="#0ea5e9" name="Despachadas" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </Card>
 
         <Card>
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-              <Zap size={20} className="text-cyan-400" />
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-white flex items-center gap-3">
+              <Zap size={24} className="text-[#00d9ff]" />
               Productividad por Turno
             </h2>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={320}>
             <PieChart>
               <Pie
                 data={mockProductivityData}
@@ -184,25 +148,29 @@ export default function DashboardPage() {
                 nameKey="shift"
                 cx="50%"
                 cy="50%"
-                outerRadius={80}
-                label
+                outerRadius={90}
+                label={(entry: any) => `${entry.value}%`}
               >
                 {COLORS.map((color, index) => (
                   <Cell key={`cell-${index}`} fill={color} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ backgroundColor: '#1a2332', border: '1px solid #2d435e' }} />
+              <Tooltip
+                contentStyle={{ backgroundColor: '#1a2332', border: '1px solid #2d435e', borderRadius: '8px' }}
+                labelStyle={{ color: '#fff' }}
+              />
             </PieChart>
           </ResponsiveContainer>
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      {/* Alerts and Resources */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         <Card>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-              <AlertTriangle size={20} className="text-yellow-400" />
-              Alertas Activas
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-white flex items-center gap-3">
+              <AlertTriangle size={24} className="text-yellow-400" />
+              Alertas Críticas
             </h2>
             <Link href="/alerts">
               <Button variant="outline" size="sm">
@@ -210,76 +178,63 @@ export default function DashboardPage() {
               </Button>
             </Link>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {mockAlerts.slice(0, 3).map((alert) => (
-              <div key={alert.id} className="p-3 bg-dark-tertiary rounded border border-dark-border hover:border-yellow-600 transition-colors cursor-pointer">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Badge
-                        variant={
-                          alert.type === 'Crítico'
-                            ? 'danger'
-                            : alert.type === 'Advertencia'
-                            ? 'warning'
-                            : 'info'
-                        }
-                      >
-                        {alert.type}
-                      </Badge>
-                    </div>
-                    <p className="font-medium text-white text-sm">{alert.title}</p>
-                    <p className="text-xs text-gray-400 mt-1">{alert.description}</p>
-                  </div>
+              <div
+                key={alert.id}
+                className="p-4 bg-[#243447] rounded-lg border border-[#2d435e] hover:border-[#00d9ff] transition-all cursor-pointer"
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <Badge
+                    variant={
+                      alert.type === 'Crítico'
+                        ? 'danger'
+                        : alert.type === 'Advertencia'
+                        ? 'warning'
+                        : 'info'
+                    }
+                  >
+                    {alert.type}
+                  </Badge>
+                  <span className="text-xs text-gray-500">{alert.timestamp}</span>
                 </div>
+                <p className="font-semibold text-white">{alert.title}</p>
+                <p className="text-sm text-gray-400 mt-2">{alert.description}</p>
               </div>
             ))}
           </div>
         </Card>
 
         <Card>
-          <div className="mb-4">
-            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-              <Activity size={20} className="text-cyan-400" />
-              Recursos Disponibles
-            </h2>
-          </div>
-          <div className="space-y-3">
-            <div className="p-3 bg-dark-tertiary rounded border border-dark-border">
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-sm font-medium text-white">Montacargas Operativos</p>
-                <Badge variant="success">3 de 4</Badge>
+          <h2 className="text-xl font-bold text-white flex items-center gap-3 mb-6">
+            <Activity size={24} className="text-[#00d9ff]" />
+            Recursos Disponibles
+          </h2>
+          <div className="space-y-5">
+            {[
+              { label: 'Montacargas Operativos', value: '3 de 4', percentage: 75, color: 'bg-green-500' },
+              { label: 'Operarios Disponibles', value: '15 de 18', percentage: 83, color: 'bg-blue-500' },
+              { label: 'Capacidad del Almacén', value: '65% Ocupado', percentage: 65, color: 'bg-yellow-500' },
+            ].map((item, idx) => (
+              <div key={idx} className="p-4 bg-[#243447] rounded-lg border border-[#2d435e]">
+                <div className="flex justify-between items-center mb-3">
+                  <p className="text-sm font-semibold text-white">{item.label}</p>
+                  <Badge variant="info">{item.value}</Badge>
+                </div>
+                <div className="w-full bg-[#1a2332] rounded-full h-2 overflow-hidden">
+                  <div className={`${item.color} h-2 rounded-full transition-all`} style={{ width: `${item.percentage}%` }}></div>
+                </div>
               </div>
-              <div className="w-full bg-dark-primary rounded-full h-2">
-                <div className="bg-green-500 h-2 rounded-full" style={{ width: '75%' }}></div>
-              </div>
-            </div>
-            <div className="p-3 bg-dark-tertiary rounded border border-dark-border">
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-sm font-medium text-white">Operarios Disponibles</p>
-                <Badge variant="success">15 de 18</Badge>
-              </div>
-              <div className="w-full bg-dark-primary rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '83%' }}></div>
-              </div>
-            </div>
-            <div className="p-3 bg-dark-tertiary rounded border border-dark-border">
-              <div className="flex justify-between items-center mb-2">
-                <p className="text-sm font-medium text-white">Capacidad del Almacén</p>
-                <Badge variant="warning">65% Ocupado</Badge>
-              </div>
-              <div className="w-full bg-dark-primary rounded-full h-2">
-                <div className="bg-yellow-500 h-2 rounded-full" style={{ width: '65%' }}></div>
-              </div>
-            </div>
+            ))}
           </div>
         </Card>
       </div>
 
-      <Card className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-            <Activity size={20} className="text-cyan-400" />
+      {/* Operations Table */}
+      <Card className="mb-12">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-white flex items-center gap-3">
+            <Activity size={24} className="text-[#00d9ff]" />
             Operaciones Recientes
           </h2>
           <Link href="/operations">
@@ -291,13 +246,14 @@ export default function DashboardPage() {
         <Table data={mockOperations} columns={operationColumns} />
       </Card>
 
+      {/* Action Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Link href="/operations">
-          <Card className="hover:shadow-xl transition-all h-full">
+          <Card className="hover:shadow-2xl transition-all duration-300 h-full">
             <div className="text-center">
-              <div className="text-4xl mb-2">7</div>
-              <p className="text-gray-400 font-medium">Operaciones Activas</p>
-              <Button variant="secondary" size="sm" className="mt-4 w-full">
+              <div className="text-5xl font-bold text-[#00d9ff] mb-3">7</div>
+              <p className="text-gray-400 font-semibold mb-6">Operaciones Activas</p>
+              <Button variant="secondary" size="md" className="w-full">
                 Ver detalle
               </Button>
             </div>
@@ -305,11 +261,11 @@ export default function DashboardPage() {
         </Link>
 
         <Link href="/alerts">
-          <Card className="hover:shadow-xl transition-all h-full">
+          <Card className="hover:shadow-2xl transition-all duration-300 h-full">
             <div className="text-center">
-              <div className="text-4xl mb-2 text-yellow-400">3</div>
-              <p className="text-gray-400 font-medium">Alertas Críticas</p>
-              <Button variant="danger" size="sm" className="mt-4 w-full">
+              <div className="text-5xl font-bold text-yellow-400 mb-3">3</div>
+              <p className="text-gray-400 font-semibold mb-6">Alertas Críticas</p>
+              <Button variant="danger" size="md" className="w-full">
                 Revisar ahora
               </Button>
             </div>
@@ -317,11 +273,11 @@ export default function DashboardPage() {
         </Link>
 
         <Link href="/kpis">
-          <Card className="hover:shadow-xl transition-all h-full">
+          <Card className="hover:shadow-2xl transition-all duration-300 h-full">
             <div className="text-center">
-              <div className="text-4xl mb-2 text-green-400">96.5%</div>
-              <p className="text-gray-400 font-medium">Cumplimiento SLA</p>
-              <Button variant="primary" size="sm" className="mt-4 w-full">
+              <div className="text-5xl font-bold text-green-400 mb-3">96.5%</div>
+              <p className="text-gray-400 font-semibold mb-6">Cumplimiento SLA</p>
+              <Button variant="primary" size="md" className="w-full">
                 Explorar KPIs
               </Button>
             </div>

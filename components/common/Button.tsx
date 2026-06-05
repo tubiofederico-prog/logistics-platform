@@ -21,9 +21,9 @@ export function Button({
     'font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2'
 
   const variants = {
-    primary: 'bg-cyan-500 text-dark-primary hover:bg-cyan-400 active:scale-95',
-    secondary: 'bg-electric-500 text-white hover:bg-electric-600 active:scale-95',
-    outline: 'border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-dark-primary',
+    primary: 'bg-[#00d9ff] text-[#0f1419] hover:bg-[#00b8d4] active:scale-95 font-semibold',
+    secondary: 'bg-[#0ea5e9] text-white hover:bg-[#0284c7] active:scale-95 font-semibold',
+    outline: 'border border-[#00d9ff] text-[#00d9ff] hover:bg-[#00d9ff] hover:text-[#0f1419] transition-all',
     danger: 'bg-red-600 text-white hover:bg-red-700 active:scale-95',
   }
 

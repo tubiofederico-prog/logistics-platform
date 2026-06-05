@@ -21,38 +21,38 @@ export function Table<T extends { id?: string | number }>({
   actions,
 }: TableProps<T>) {
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto rounded-lg border border-[#2d435e]">
       <table className="w-full">
         <thead>
-          <tr className="border-b border-dark-border">
+          <tr className="border-b border-[#2d435e] bg-[#243447]">
             {columns.map((column) => (
               <th
                 key={String(column.accessor)}
-                className="px-4 py-3 text-left text-sm font-semibold text-gray-300 bg-dark-tertiary"
+                className="px-6 py-4 text-left text-sm font-semibold text-gray-300"
                 style={{ width: column.width }}
               >
                 {column.header}
               </th>
             ))}
-            {actions && <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300 bg-dark-tertiary">Acciones</th>}
+            {actions && <th className="px-6 py-4 text-left text-sm font-semibold text-gray-300">Acciones</th>}
           </tr>
         </thead>
         <tbody>
           {data.map((row, idx) => (
             <tr
               key={row.id || idx}
-              className="border-b border-dark-border hover:bg-dark-tertiary transition-colors cursor-pointer"
+              className="border-b border-[#2d435e] hover:bg-[#243447] transition-colors cursor-pointer last:border-b-0"
               onClick={() => onRowClick?.(row)}
             >
               {columns.map((column) => {
                 const value = row[column.accessor]
                 return (
-                  <td key={String(column.accessor)} className="px-4 py-3 text-sm text-gray-200">
+                  <td key={String(column.accessor)} className="px-6 py-4 text-sm text-gray-200">
                     {column.render ? column.render(value, row) : String(value)}
                   </td>
                 )
               })}
-              {actions && <td className="px-4 py-3 text-sm">{actions(row)}</td>}
+              {actions && <td className="px-6 py-4 text-sm">{actions(row)}</td>}
             </tr>
           ))}
         </tbody>

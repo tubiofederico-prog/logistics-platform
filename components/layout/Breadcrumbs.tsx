@@ -28,8 +28,8 @@ export function Breadcrumbs() {
   }
 
   return (
-    <div className="flex items-center gap-2 text-sm text-gray-400 mb-6">
-      <Link href="/" className="hover:text-cyan-400 transition-colors">
+    <div className="flex items-center gap-2 text-sm text-gray-400 mb-8">
+      <Link href="/" className="hover:text-[#00d9ff] transition-colors font-medium">
         Home
       </Link>
       {segments.map((segment, idx) => {
@@ -37,11 +37,11 @@ export function Breadcrumbs() {
         const isLast = idx === segments.length - 1
         return (
           <div key={segment} className="flex items-center gap-2">
-            <ChevronRight size={16} />
+            <ChevronRight size={16} className="text-gray-600" />
             {isLast ? (
-              <span className="text-cyan-400 font-medium">{label}</span>
+              <span className="text-[#00d9ff] font-semibold">{label}</span>
             ) : (
-              <Link href={`/${segments.slice(0, idx + 1).join('/')}`} className="hover:text-cyan-400 transition-colors">
+              <Link href={`/${segments.slice(0, idx + 1).join('/')}`} className="hover:text-[#00d9ff] transition-colors">
                 {label}
               </Link>
             )}

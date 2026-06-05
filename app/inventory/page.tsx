@@ -20,25 +20,13 @@ export default function InventoryPage() {
   )
 
   const columns = [
-    {
-      header: 'ID',
-      accessor: 'id' as const,
-      width: '100px',
-    },
-    {
-      header: 'Cliente',
-      accessor: 'client' as const,
-    },
-    {
-      header: 'Producto',
-      accessor: 'product' as const,
-    },
+    { header: 'ID', accessor: 'id' as const, width: '120px' },
+    { header: 'Cliente', accessor: 'client' as const },
+    { header: 'Producto', accessor: 'product' as const },
     {
       header: 'Presentación',
       accessor: 'presentation' as const,
-      render: (value: string) => (
-        <Badge variant="secondary">{value}</Badge>
-      ),
+      render: (value: string) => <Badge variant="secondary">{value}</Badge>,
     },
     {
       header: 'Cantidad',
@@ -48,9 +36,7 @@ export default function InventoryPage() {
     {
       header: 'Ubicación',
       accessor: 'location' as const,
-      render: (value: string) => (
-        <span className="font-mono text-cyan-400">{value}</span>
-      ),
+      render: (value: string) => <span className="font-mono text-[#00d9ff] font-semibold">{value}</span>,
     },
     {
       header: 'Estado',
@@ -70,51 +56,53 @@ export default function InventoryPage() {
     <>
       <Breadcrumbs />
 
-      <div className="mb-8 flex justify-between items-start">
+      <div className="mb-12 flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Inventario WMS</h1>
-          <p className="text-gray-400">Gestión centralizada de inventarios multisede</p>
+          <h1 className="text-4xl font-bold text-white mb-3">Inventario WMS</h1>
+          <p className="text-gray-400 text-lg">Gestión centralizada de inventarios multisede</p>
         </div>
         <Link href="/inventory/new-reception">
-          <Button variant="primary">
-            <Plus size={18} /> Registrar Recepción
+          <Button variant="primary" size="lg">
+            <Plus size={20} /> Registrar Recepción
           </Button>
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      {/* Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <Card>
-          <div className="text-center">
-            <p className="text-gray-400 text-sm mb-1">Total Toneladas</p>
-            <p className="text-4xl font-bold text-cyan-400">1,595</p>
-            <p className="text-xs text-gray-500 mt-2">+120 vs. semana anterior</p>
+          <div>
+            <p className="text-gray-400 text-sm font-medium mb-2">Total Toneladas</p>
+            <p className="text-4xl font-bold text-[#00d9ff] mb-2">1,595</p>
+            <p className="text-xs text-green-400 font-semibold">↑ 120 vs. semana anterior</p>
           </div>
         </Card>
         <Card>
-          <div className="text-center">
-            <p className="text-gray-400 text-sm mb-1">SKUs Almacenados</p>
-            <p className="text-4xl font-bold text-electric-500">6</p>
-            <p className="text-xs text-gray-500 mt-2">2 en estado crítico</p>
+          <div>
+            <p className="text-gray-400 text-sm font-medium mb-2">SKUs Almacenados</p>
+            <p className="text-4xl font-bold text-[#0ea5e9] mb-2">6</p>
+            <p className="text-xs text-yellow-400 font-semibold">⚠ 2 en estado crítico</p>
           </div>
         </Card>
         <Card>
-          <div className="text-center">
-            <p className="text-gray-400 text-sm mb-1">Ocupación Almacén</p>
-            <p className="text-4xl font-bold text-yellow-400">65%</p>
-            <p className="text-xs text-gray-500 mt-2">2,675 toneladas disponibles</p>
+          <div>
+            <p className="text-gray-400 text-sm font-medium mb-2">Ocupación Almacén</p>
+            <p className="text-4xl font-bold text-yellow-400 mb-2">65%</p>
+            <p className="text-xs text-gray-400">2,675 toneladas disponibles</p>
           </div>
         </Card>
       </div>
 
+      {/* Search and Filters */}
       <Card className="mb-8">
-        <div className="flex gap-4 mb-6 flex-wrap">
+        <div className="flex gap-4 mb-8 flex-wrap">
           <div className="flex-1 min-w-64">
             <input
               type="text"
               placeholder="Buscar por producto, cliente o ubicación..."
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="w-full bg-dark-tertiary border border-dark-border rounded-lg px-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+              className="w-full bg-[#243447] border border-[#2d435e] rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#00d9ff] focus:ring-2 focus:ring-[#00d9ff]/20 transition-all"
             />
           </div>
           <Button variant="outline">
@@ -131,17 +119,18 @@ export default function InventoryPage() {
           actions={(row) => (
             <Link href={`/inventory/${row.id}`}>
               <Button variant="outline" size="sm">
-                <Eye size={16} />
+                <Eye size={16} /> Ver
               </Button>
             </Link>
           )}
         />
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card>
-          <h3 className="text-lg font-semibold text-white mb-4">Acciones Rápidas</h3>
-          <div className="space-y-2">
+          <h3 className="text-xl font-bold text-white mb-6">Acciones Rápidas</h3>
+          <div className="space-y-3">
             <Link href="/inventory/transfers">
               <Button variant="secondary" className="w-full">
                 Mover Inventario
@@ -166,22 +155,22 @@ export default function InventoryPage() {
         </Card>
 
         <Card>
-          <h3 className="text-lg font-semibold text-white mb-4">Productos Críticos</h3>
-          <div className="space-y-3">
+          <h3 className="text-xl font-bold text-white mb-6">Productos Críticos</h3>
+          <div className="space-y-4">
             {mockInventoryItems
               .filter((item) => item.status !== 'Activo')
               .map((item) => (
-                <div key={item.id} className="p-3 bg-dark-tertiary rounded border border-dark-border">
+                <div key={item.id} className="p-4 bg-[#243447] rounded-lg border border-[#2d435e] hover:border-[#00d9ff] transition-all cursor-pointer">
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <p className="font-medium text-white text-sm">{item.product}</p>
-                      <p className="text-xs text-gray-400">{item.client}</p>
+                      <p className="font-semibold text-white">{item.product}</p>
+                      <p className="text-xs text-gray-400 mt-1">{item.client}</p>
                     </div>
                     <Badge variant={item.status === 'Bajo Stock' ? 'warning' : 'danger'}>
                       {item.status}
                     </Badge>
                   </div>
-                  <p className="text-xs text-gray-500">{item.quantity} {item.unit} • {item.location}</p>
+                  <p className="text-xs text-gray-500 font-mono">{item.quantity} {item.unit} • {item.location}</p>
                 </div>
               ))}
           </div>
