@@ -36,11 +36,9 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <aside className="w-64 bg-[#1a2332] border-r border-[#2d435e] h-screen fixed left-0 top-0 overflow-y-auto z-50">
-      <div className="p-6 border-b border-[#2d435e]">
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-[#00d9ff] to-[#0ea5e9] bg-clip-text text-transparent">
-          LogistiX
-        </h1>
+    <aside className="w-64 bg-navy-800 border-r border-navy-600 h-screen fixed left-0 top-0 overflow-y-auto z-50">
+      <div className="p-6 border-b border-navy-600">
+        <h1 className="text-2xl font-bold text-cyan-400">LogistiX</h1>
         <p className="text-xs text-gray-500 mt-1">Torre de Control</p>
       </div>
 
@@ -53,8 +51,8 @@ export function Sidebar() {
               <div
                 className={`flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#00d9ff] to-[#00b8d4] text-[#0f1419] font-semibold'
-                    : 'text-gray-300 hover:bg-[#243447] hover:text-[#00d9ff]'
+                    ? 'bg-cyan-400 text-navy-900 font-semibold'
+                    : 'text-gray-300 hover:bg-navy-700 hover:text-cyan-400'
                 }`}
               >
                 <Icon size={20} />
@@ -65,7 +63,7 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#2d435e] bg-[#0f1419]">
+      <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-navy-600 bg-navy-900">
         <div className="text-xs text-gray-500">
           <p className="font-semibold text-gray-400 mb-1">Sesión</p>
           <p>Usuario: Admin</p>
