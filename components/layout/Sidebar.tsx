@@ -38,7 +38,7 @@ export function Sidebar() {
   return (
     <aside className="w-64 bg-dark-secondary border-r border-dark-border h-screen fixed left-0 top-0 overflow-y-auto">
       <div className="p-6 border-b border-dark-border">
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-electric-500 bg-clip-text text-transparent">
+        <h1 className="text-2xl font-bold bg-gradient-to-r from-[#00d9ff] to-[#0ea5e9] bg-clip-text text-transparent">
           LogistiX
         </h1>
         <p className="text-xs text-gray-500 mt-1">Torre de Control</p>

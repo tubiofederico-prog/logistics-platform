@@ -32,7 +32,7 @@ export function Topbar() {
           </button>
 
           <div className="flex items-center gap-2 px-3 py-2 bg-dark-tertiary rounded-lg border border-dark-border">
-            <div className="w-8 h-8 bg-gradient-to-br from-cyan-400 to-electric-500 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-[#00d9ff] to-[#0ea5e9] rounded-full flex items-center justify-center">
               <User size={16} className="text-dark-primary" />
             </div>
             <div className="hidden sm:block">
